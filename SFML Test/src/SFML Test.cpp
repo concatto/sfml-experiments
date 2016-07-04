@@ -1,4 +1,5 @@
 #include "SFML/Graphics.hpp"
+#include "Character.h"
 #include <iostream>
 #include <vector>
 #include <cstdlib>
@@ -21,8 +22,6 @@ sf::VertexArray createWorld(const std::string& world, int columns) {
 
 			int type = world[idx] - '0';
 			int v = idx * 4;
-
-			std::cout << "idx " << idx << "; type " << type << "\n";
 
 			vertices[v + 0].position = sf::Vector2f(j * 32, i * 32);
 			vertices[v + 1].position = sf::Vector2f((j + 1) * 32, i * 32);
@@ -74,6 +73,12 @@ int main() {
 	sf::VertexArray world = createWorld(level, 100);
 	sf::RenderStates states(&tileset);
 
+	sf::Texture tex;
+	tex.loadFromFile("walk.png");
+	Character c(tex);
+	c.walk();
+
+
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -82,10 +87,10 @@ int main() {
 			}
 		}
 
-		moveIfPressed(view, sf::Keyboard::Up, 0, -1);
-		moveIfPressed(view, sf::Keyboard::Down, 0, 1);
-		moveIfPressed(view, sf::Keyboard::Left, -1, 0);
-		moveIfPressed(view, sf::Keyboard::Right, 1, 0);
+		moveIfPressed(view, sf::Keyboard::Num8, 0, -1);
+		moveIfPressed(view, sf::Keyboard::Num2, 0, 1);
+		moveIfPressed(view, sf::Keyboard::Num4, -1, 0);
+		moveIfPressed(view, sf::Keyboard::Num6, 1, 0);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 			view.zoom(0.9);
@@ -93,9 +98,24 @@ int main() {
 			view.zoom(1.1);
 		}
 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+			c.accelerate();
+		} else {
+			c.slow();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			c.moveRight();
+		} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			c.moveLeft();
+		}
+
+
 		window.clear();
 		window.setView(view);
 		window.draw(world, states);
+		window.draw(c);
+		c.update();
 		window.display();
 	}
 
