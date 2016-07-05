@@ -6,17 +6,26 @@
 CPP_SRCS += \
 ../src/Animation.cpp \
 ../src/Character.cpp \
-../src/SFML\ Test.cpp 
+../src/Particle.cpp \
+../src/ParticleEmitter.cpp \
+../src/SFML\ Test.cpp \
+../src/Utility.cpp 
 
 OBJS += \
 ./src/Animation.o \
 ./src/Character.o \
-./src/SFML\ Test.o 
+./src/Particle.o \
+./src/ParticleEmitter.o \
+./src/SFML\ Test.o \
+./src/Utility.o 
 
 CPP_DEPS += \
 ./src/Animation.d \
 ./src/Character.d \
-./src/SFML\ Test.d 
+./src/Particle.d \
+./src/ParticleEmitter.d \
+./src/SFML\ Test.d \
+./src/Utility.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

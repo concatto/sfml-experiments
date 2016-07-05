@@ -87,8 +87,15 @@ int main() {
 	c.setPosition(100, 460);
 	c.walk();
 
+	sf::RenderTexture buffer;
+	buffer.create(1024, 768);
 
-	ParticleEmitter emitter(10);
+	ParticleEmitter emitter(10000);
+
+	sf::Shader shader;
+	shader.loadFromFile("glow.frag", sf::Shader::Fragment);
+	shader.setParameter("texture", sf::Shader::CurrentTexture);
+	shader.setParameter("step", sf::Vector2f(1.0 / window.getSize().x, 1.0 / window.getSize().y));
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -123,12 +130,18 @@ int main() {
 			c.moveLeft();
 		}
 
-
 		window.clear();
 		window.setView(view);
 		window.draw(world, states);
+
+
+		buffer.clear(sf::Color::Transparent);
+		buffer.draw(emitter);
+		buffer.display();
+
+		window.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
 		window.draw(c);
-		window.draw(emitter);
+
 		emitter.update();
 		c.update();
 		emitter.setOrigin(c.getPosition() + sf::Vector2f(68, 48));
