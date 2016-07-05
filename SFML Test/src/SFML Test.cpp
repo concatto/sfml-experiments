@@ -1,5 +1,7 @@
 #include "SFML/Graphics.hpp"
 #include "Character.h"
+#include "ParticleEmitter.h"
+#include "Utility.h"
 #include <iostream>
 #include <vector>
 #include <cstdlib>
@@ -47,7 +49,7 @@ void moveIfPressed(sf::View& view, sf::Keyboard::Key key, float x, float y) {
 int main() {
 	std::srand(std::time(nullptr));
 
-	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML");
+	sf::RenderWindow window(sf::VideoMode(1024, 768), "SFML");
 	window.setFramerateLimit(60);
 
 	sf::Texture tileset;
@@ -64,9 +66,15 @@ int main() {
 	sf::View view(sf::Vector2f(xCenter, yCenter), sf::Vector2f(windowSize.x, windowSize.y));
 
 	std::string level = "";
-	for (int k = 5; k >= 0; k--) {
+	for (int k = 0; k < 24; k++) {
 		for (int i = 0; i < 100; i++) {
-			level.push_back(k + '0');
+			if (k > 17) {
+				level.push_back('1');
+			} else if (k == 17) {
+				level.push_back('0');
+			} else {
+				level.push_back(static_cast<int>(Utility::random(4, 6) + 0.5) + '0');
+			}
 		}
 	}
 
@@ -76,8 +84,11 @@ int main() {
 	sf::Texture tex;
 	tex.loadFromFile("walk.png");
 	Character c(tex);
+	c.setPosition(100, 460);
 	c.walk();
 
+
+	ParticleEmitter emitter(10);
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -100,8 +111,10 @@ int main() {
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			c.accelerate();
+			if (!emitter.isActive()) emitter.start();
 		} else {
 			c.slow();
+			if (emitter.isActive()) emitter.end();
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
@@ -115,7 +128,10 @@ int main() {
 		window.setView(view);
 		window.draw(world, states);
 		window.draw(c);
+		window.draw(emitter);
+		emitter.update();
 		c.update();
+		emitter.setOrigin(c.getPosition() + sf::Vector2f(68, 48));
 		window.display();
 	}
 

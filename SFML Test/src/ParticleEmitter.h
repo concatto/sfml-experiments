@@ -17,12 +17,18 @@ private:
 	unsigned int particleAmount;
 	std::vector<Particle> particles;
 	sf::VertexArray vertices;
+	sf::Vector2f origin;
+	bool active;
 
 public:
 	ParticleEmitter(unsigned int particleAmount);
 
+	bool isActive() const;
+	void start();
+	void end();
+	void setOrigin(sf::Vector2f origin);
 	void update();
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) override;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 
 #endif /* PARTICLEEMITTER_H_ */
