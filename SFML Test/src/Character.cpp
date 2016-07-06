@@ -62,3 +62,7 @@ void Character::playAnimation(unsigned int index) {
 	animationPlaying = true;
 	currentAnimation->start();
 }
+
+bool Character::isFacingRight() const {
+	return facingRight;
+}

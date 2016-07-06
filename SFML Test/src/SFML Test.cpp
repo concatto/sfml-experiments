@@ -90,7 +90,10 @@ int main() {
 	sf::RenderTexture buffer;
 	buffer.create(1024, 768);
 
-	ParticleEmitter emitter(10000);
+	sf::RenderTexture buffer2;
+	buffer2.create(1024, 768);
+
+	ParticleEmitter emitter(3000);
 
 	sf::Shader shader;
 	shader.loadFromFile("glow.frag", sf::Shader::Fragment);
@@ -105,10 +108,10 @@ int main() {
 			}
 		}
 
-		moveIfPressed(view, sf::Keyboard::Num8, 0, -1);
-		moveIfPressed(view, sf::Keyboard::Num2, 0, 1);
-		moveIfPressed(view, sf::Keyboard::Num4, -1, 0);
-		moveIfPressed(view, sf::Keyboard::Num6, 1, 0);
+		moveIfPressed(view, sf::Keyboard::Numpad8, 0, -1);
+		moveIfPressed(view, sf::Keyboard::Numpad2, 0, 1);
+		moveIfPressed(view, sf::Keyboard::Numpad4, -1, 0);
+		moveIfPressed(view, sf::Keyboard::Numpad6, 1, 0);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 			view.zoom(0.9);
@@ -130,21 +133,28 @@ int main() {
 			c.moveLeft();
 		}
 
+		emitter.update();
+		c.update();
+		emitter.setOrigin(c.getPosition() + sf::Vector2f(78, 52));
+		emitter.setInvert(!c.isFacingRight());
+
 		window.clear();
 		window.setView(view);
 		window.draw(world, states);
-
 
 		buffer.clear(sf::Color::Transparent);
 		buffer.draw(emitter);
 		buffer.display();
 
-		window.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
+		shader.setParameter("direction", sf::Vector2f(1, 0));
+		buffer2.clear(sf::Color::Transparent);
+		buffer2.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
+		buffer2.display();
+
+		shader.setParameter("direction", sf::Vector2f(0, 1));
+		window.draw(sf::Sprite(buffer2.getTexture()), sf::RenderStates(&shader));
 		window.draw(c);
 
-		emitter.update();
-		c.update();
-		emitter.setOrigin(c.getPosition() + sf::Vector2f(68, 48));
 		window.display();
 	}
 

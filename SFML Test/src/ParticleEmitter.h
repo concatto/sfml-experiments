@@ -19,6 +19,7 @@ private:
 	sf::VertexArray vertices;
 	sf::Vector2f origin;
 	bool active;
+	bool invert;
 
 public:
 	ParticleEmitter(unsigned int particleAmount);
@@ -27,6 +28,7 @@ public:
 	void start();
 	void end();
 	void setOrigin(sf::Vector2f origin);
+	void setInvert(bool invert);
 	void update();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

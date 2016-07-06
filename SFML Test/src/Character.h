@@ -32,6 +32,7 @@ public:
 	void slow();
 	void moveLeft();
 	void moveRight();
+	bool isFacingRight() const;
 };
 
 #endif /* CHARACTER_H_ */

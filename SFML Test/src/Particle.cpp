@@ -12,12 +12,16 @@ Particle::Particle() {
 	spawn();
 }
 
-void Particle::spawn() {
-	angle = Utility::random(2.3, 3.7);
-	speed = Utility::random(1, 10);
-	lifetime = Utility::random(1, 100);
+void Particle::spawn(bool inverse, sf::Vector2f origin) {
+	angle = Utility::random(2.9, 3.3);
+	speed = Utility::random(5, 20);
+	lifetime = Utility::random(1, 80);
 	timeLeft = lifetime;
-	originDelta = sf::Vector2f(Utility::random(-6, 6), Utility::random(-20, 20));
+	originDelta = sf::Vector2f(Utility::random(-20, 20), Utility::random(-20, 20));
+
+	if (inverse) angle = 3.14159 - angle;
+	this->inverse = inverse;
+	this->origin = origin;
 }
 
 void Particle::update() {
@@ -34,6 +38,14 @@ float Particle::getAngle() const {
 
 float Particle::getSpeed() const {
 	return speed;
+}
+
+bool Particle::isInverse() const {
+	return inverse;
+}
+
+sf::Vector2f Particle::getOrigin() const {
+	return origin;
 }
 
 sf::Vector2f Particle::getOriginDelta() const {

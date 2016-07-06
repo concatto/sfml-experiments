@@ -17,15 +17,19 @@ private:
 	unsigned int lifetime;
 	unsigned int timeLeft;
 	sf::Vector2f originDelta;
+	sf::Vector2f origin;
+	bool inverse;
 
 public:
 	Particle();
 
-	void spawn();
+	void spawn(bool inverse = false, sf::Vector2f origin = sf::Vector2f());
 	void update();
 	float getRemainingTime() const;
 	float getAngle() const;
 	float getSpeed() const;
+	bool isInverse() const;
+	sf::Vector2f getOrigin() const;
 	sf::Vector2f getOriginDelta() const;
 };
 
