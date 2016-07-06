@@ -6,6 +6,7 @@
  */
 
 #include "Animation.h"
+#include <iostream>
 
 Animation::Animation(std::vector<sf::IntRect> frames, int updateRate)
 	: currentFrame(0), frames(frames), updateRate(updateRate), step(0) {
@@ -22,9 +23,10 @@ void Animation::update(sf::Sprite& target) {
 	}
 }
 
-void Animation::start() {
+void Animation::start(sf::Sprite& target) {
 	step = 0;
 	currentFrame = 0;
+	target.setTextureRect(frames[currentFrame]);
 }
 
 void Animation::setUpdateRate(int updateRate) {

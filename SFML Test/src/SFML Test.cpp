@@ -49,7 +49,10 @@ void moveIfPressed(sf::View& view, sf::Keyboard::Key key, float x, float y) {
 int main() {
 	std::srand(std::time(nullptr));
 
-	sf::RenderWindow window(sf::VideoMode(1024, 768), "SFML");
+	const int width = 1024;
+	const int height = 768;
+
+	sf::RenderWindow window(sf::VideoMode(width, height), "SFML");
 	window.setFramerateLimit(60);
 
 	sf::Texture tileset;
@@ -83,22 +86,21 @@ int main() {
 
 	sf::Texture tex;
 	tex.loadFromFile("walk.png");
-	Character c(tex);
+	Character c(tex, sf::IntRect(0, 0, 50, 50));
 	c.setPosition(100, 460);
-	c.walk();
 
 	sf::RenderTexture buffer;
-	buffer.create(1024, 768);
+	buffer.create(width, height);
 
 	sf::RenderTexture buffer2;
-	buffer2.create(1024, 768);
+	buffer2.create(width, height);
 
-	ParticleEmitter emitter(3000);
+	ParticleEmitter emitter(9000);
 
 	sf::Shader shader;
 	shader.loadFromFile("glow.frag", sf::Shader::Fragment);
 	shader.setParameter("texture", sf::Shader::CurrentTexture);
-	shader.setParameter("step", sf::Vector2f(1.0 / window.getSize().x, 1.0 / window.getSize().y));
+	shader.setParameter("step", sf::Vector2f(1.0 / width, 1.0 / height));
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -127,9 +129,14 @@ int main() {
 			if (emitter.isActive()) emitter.end();
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+		bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+
+		if (!(left || right) || (left && right)) {
+			c.stand();
+		} else if (right) {
 			c.moveRight();
-		} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		} else if (left) {
 			c.moveLeft();
 		}
 
@@ -145,15 +152,16 @@ int main() {
 		buffer.clear(sf::Color::Transparent);
 		buffer.draw(emitter);
 		buffer.display();
-
+/*
 		shader.setParameter("direction", sf::Vector2f(1, 0));
 		buffer2.clear(sf::Color::Transparent);
 		buffer2.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
-		buffer2.display();
+		buffer2.display();*/
 
 		shader.setParameter("direction", sf::Vector2f(0, 1));
-		window.draw(sf::Sprite(buffer2.getTexture()), sf::RenderStates(&shader));
+		window.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
 		window.draw(c);
+		c.draw(window);
 
 		window.display();
 	}

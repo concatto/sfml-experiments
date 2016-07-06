@@ -23,7 +23,7 @@ public:
 	Animation(std::vector<sf::IntRect> frames = std::vector<sf::IntRect>(), int updateRate = UpdateSpeed::Normal);
 
 	void update(sf::Sprite& target);
-	void start();
+	void start(sf::Sprite& target);
 	void setUpdateRate(int updateRate);
 
 	static std::vector<sf::IntRect> generateFrames(int amount, sf::Vector2i size);

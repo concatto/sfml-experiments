@@ -8,38 +8,39 @@
 #include "Character.h"
 
 std::vector<Animation> Character::animations{
-	Animation(Animation::generateFrames(10, sf::Vector2i(124, 77)), 5)
+	Animation({sf::IntRect(1240, 0, 124, 77)}, Animation::Normal),
+	Animation(Animation::generateFrames(10, sf::Vector2i(124, 77)), Animation::Normal)
 };
 
 
-Character::Character(const sf::Texture& texture)
-	: sf::Sprite(texture), currentAnimation(nullptr), animationPlaying(false), facingRight(true), movementSpeed(5) {
+Character::Character(const sf::Texture& texture, sf::IntRect boundingBox)
+	: sf::Sprite(texture), animationIndex(0), animationPlaying(false), facingRight(true), movementSpeed(5), boundingBox(boundingBox) {
 
 }
 
 void Character::update() {
 	if (animationPlaying) {
-		if (currentAnimation != nullptr) {
-			currentAnimation->update(*this);
-		}
+		animations[animationIndex].update(*this);
 	}
 }
 
-void Character::walk() {
-	playAnimation(0);
+void Character::stand() {
+	playAnimation(State::Stand);
 }
 
 void Character::accelerate() {
-	Character::animations[0].setUpdateRate(Animation::Fast);
+	Character::animations[State::Walk].setUpdateRate(Animation::Fast);
 	movementSpeed = Speed::Fast;
 }
 
 void Character::slow() {
-	Character::animations[0].setUpdateRate(Animation::Normal);
+	Character::animations[State::Walk].setUpdateRate(Animation::Normal);
 	movementSpeed = Speed::Normal;
 }
 
 void Character::moveLeft() {
+	playAnimation(State::Walk);
+
 	if (facingRight) {
 		facingRight = false;
 		setScale(-1, 1);
@@ -49,6 +50,8 @@ void Character::moveLeft() {
 }
 
 void Character::moveRight() {
+	playAnimation(State::Walk);
+
 	if (!facingRight) {
 		facingRight = true;
 		setScale(1, 1);
@@ -58,11 +61,25 @@ void Character::moveRight() {
 }
 
 void Character::playAnimation(unsigned int index) {
-	currentAnimation = &(Character::animations[index]);
+	if (index == animationIndex) return;
+
+	animationIndex = index;
 	animationPlaying = true;
-	currentAnimation->start();
+	animations[index].start(*this);
 }
 
 bool Character::isFacingRight() const {
 	return facingRight;
+}
+
+sf::IntRect Character::getBoundingBox() const {
+	return boundingBox;
+}
+
+void Character::draw(sf::RenderTarget& target) {
+	sf::RectangleShape box(sf::Vector2f(boundingBox.width, boundingBox.height));
+	box.setPosition(this->getPosition() + sf::Vector2f(boundingBox.top, boundingBox.left));
+	box.setOutlineColor(sf::Color::Red);
+	box.setOutlineThickness(3);
+	target.draw(box);
 }
