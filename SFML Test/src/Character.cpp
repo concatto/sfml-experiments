@@ -5,6 +5,7 @@
  *      Author: concatto
  */
 
+#include <iostream>
 #include "Character.h"
 
 std::vector<Animation> Character::animations{
@@ -13,19 +14,29 @@ std::vector<Animation> Character::animations{
 };
 
 
-Character::Character(const sf::Texture& texture, sf::IntRect boundingBox)
-	: sf::Sprite(texture), animationIndex(0), animationPlaying(false), facingRight(true), movementSpeed(5), boundingBox(boundingBox) {
+Character::Character(const sf::Texture& texture, sf::Vector2u sizeBounds)
+	: sf::Sprite(texture), state(State::None), animationIndex(-1), animationPlaying(false), facingRight(true), movementSpeed(5), sizeBounds(sizeBounds) {
 
+	stand();
+
+	sf::IntRect rect = getTextureRect();
+	setOrigin(rect.width / 2.0, 0);
 }
 
 void Character::update() {
 	if (animationPlaying) {
 		animations[animationIndex].update(*this);
 	}
+
+	if (getState(State::Walk)) {
+		move(movementSpeed * (facingRight ? 1 : -1), 0);
+	}
+
+	setScale(facingRight ? 1 : -1, 1);
 }
 
 void Character::stand() {
-	playAnimation(State::Stand);
+	unsetState(State::Walk);
 }
 
 void Character::accelerate() {
@@ -39,25 +50,13 @@ void Character::slow() {
 }
 
 void Character::moveLeft() {
-	playAnimation(State::Walk);
-
-	if (facingRight) {
-		facingRight = false;
-		setScale(-1, 1);
-		move(124, 0);
-	}
-	move(-movementSpeed, 0);
+	setState(State::Walk);
+	facingRight = false;
 }
 
 void Character::moveRight() {
-	playAnimation(State::Walk);
-
-	if (!facingRight) {
-		facingRight = true;
-		setScale(1, 1);
-		move(-124, 0);
-	}
-	move(movementSpeed, 0);
+	setState(State::Walk);
+	facingRight = true;
 }
 
 void Character::playAnimation(unsigned int index) {
@@ -72,14 +71,29 @@ bool Character::isFacingRight() const {
 	return facingRight;
 }
 
-sf::IntRect Character::getBoundingBox() const {
-	return boundingBox;
+sf::Vector2u Character::getSizeBounds() const {
+	return sizeBounds;
 }
 
 void Character::draw(sf::RenderTarget& target) {
-	sf::RectangleShape box(sf::Vector2f(boundingBox.width, boundingBox.height));
-	box.setPosition(this->getPosition() + sf::Vector2f(boundingBox.top, boundingBox.left));
+	sf::RectangleShape box(sf::Vector2f(sizeBounds.x, sizeBounds.y));
+	sf::Vector2f pos = getPosition();
+	box.setPosition(pos.x - (sizeBounds.x / 2.0), pos.y + (getTextureRect().height - sizeBounds.y));
+	box.setFillColor(sf::Color::Transparent);
 	box.setOutlineColor(sf::Color::Red);
 	box.setOutlineThickness(3);
+
 	target.draw(box);
+}
+
+void Character::setState(State s) {
+	state = state | s;
+}
+
+void Character::unsetState(State s) {
+	state = state & (~s);
+}
+
+bool Character::getState(State s) const {
+	return (state & s) != 0;
 }

@@ -13,20 +13,24 @@
 
 class Character : public sf::Sprite {
 private:
-	enum State {Stand = 0, Walk = 1};
+	enum State {None = 0, Stand = 1, Walk = 2};
 	enum Speed {Fast = 10, Normal = 2};
 
 	static std::vector<Animation> animations;
+	sf::Uint32 state;
 	unsigned int animationIndex;
 	bool animationPlaying;
 	bool facingRight;
 	int movementSpeed;
-	sf::IntRect boundingBox;
+	sf::Vector2u sizeBounds;
 
 	void playAnimation(unsigned int index);
+	void setState(State s);
+	void unsetState(State s);
+	bool getState(State s) const;
 
 public:
-	Character(const sf::Texture& texture, sf::IntRect boundingBox);
+	Character(const sf::Texture& texture, sf::Vector2u sizeBounds);
 
 	void update();
 	void accelerate();
@@ -35,7 +39,8 @@ public:
 	void moveRight();
 	void stand();
 	bool isFacingRight() const;
-	sf::IntRect getBoundingBox() const;
+	bool isMoving() const;
+	sf::Vector2u getSizeBounds() const;
 	void draw(sf::RenderTarget& target);
 };
 

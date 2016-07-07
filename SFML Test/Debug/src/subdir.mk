@@ -9,6 +9,7 @@ CPP_SRCS += \
 ../src/Particle.cpp \
 ../src/ParticleEmitter.cpp \
 ../src/SFML\ Test.cpp \
+../src/Tile.cpp \
 ../src/Utility.cpp \
 ../src/World.cpp 
 
@@ -18,6 +19,7 @@ OBJS += \
 ./src/Particle.o \
 ./src/ParticleEmitter.o \
 ./src/SFML\ Test.o \
+./src/Tile.o \
 ./src/Utility.o \
 ./src/World.o 
 
@@ -27,6 +29,7 @@ CPP_DEPS += \
 ./src/Particle.d \
 ./src/ParticleEmitter.d \
 ./src/SFML\ Test.d \
+./src/Tile.d \
 ./src/Utility.d \
 ./src/World.d 
 

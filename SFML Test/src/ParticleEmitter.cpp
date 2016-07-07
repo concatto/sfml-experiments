@@ -16,7 +16,9 @@ ParticleEmitter::ParticleEmitter(unsigned int particleAmount)
 }
 
 void ParticleEmitter::setOrigin(sf::Vector2f origin) {
-	this->origin = origin;
+	float xOffset = 20;
+	float yOffset = 55;
+	this->origin = origin + sf::Vector2f(xOffset * (invert ? -1 : 1), yOffset);
 }
 
 void ParticleEmitter::setInvert(bool invert) {
@@ -32,9 +34,8 @@ void ParticleEmitter::update() {
 		if (p.getRemainingTime() > 0) {
 			double distance = p.getSpeed() * ((1 - p.getRemainingTime()) * 20);
 			double angle = p.getAngle();
-			double fix = p.isInverse() ? -152 : 0;
 
-			vertices[i].position = sf::Vector2f(std::cos(angle) * distance, std::sin(angle) * distance) + p.getOrigin() + p.getOriginDelta() + sf::Vector2f(fix, 0);
+			vertices[i].position = sf::Vector2f(std::cos(angle) * distance, std::sin(angle) * distance) + p.getOrigin() + p.getOriginDelta();
 		} else if (active) {
 			p.spawn(invert, origin);
 			vertices[i].position = origin;
