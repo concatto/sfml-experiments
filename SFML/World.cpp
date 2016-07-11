@@ -18,14 +18,19 @@ sf::Vector2f World::getTileSize() const
     return tileSize;
 }
 
-World::TileType World::getTileType(unsigned int i, unsigned int j) const
+World::TileType World::getTileType(unsigned int x, unsigned int y) const
 {
-    return tiles[i][j];
+    return tiles[y][x];
 }
 
 unsigned int World::getRowCount() const
 {
     return tiles.size();
+}
+
+sf::Vector2i World::toTileCoordinates(sf::Vector2f point) const
+{
+    return sf::Vector2i(point.x / tileSize.x, point.y / tileSize.y);
 }
 
 

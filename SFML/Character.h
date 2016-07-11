@@ -10,14 +10,10 @@ private:
 
 	static std::vector<Animation> animations;
 	sf::Uint32 state;
-	unsigned int animationIndex;
-	bool animationPlaying;
 	bool facingRight;
-	int movementSpeed;
+    float movementSpeed;
     sf::Vector2u sizeBounds;
-    float force;
-
-	void playAnimation(unsigned int index);
+    float verticalForce;
 
 public:
     enum State {None = 0, Stand = 1, Walk = 2, Ground = 4};
@@ -33,11 +29,12 @@ public:
     void jump();
 	bool isFacingRight() const;
 	bool isMoving() const;
+    float getVerticalForce() const;
+    float getMovementSpeed() const;
+    void setVerticalForce(float verticalForce);
 	sf::Vector2u getSizeBounds() const;
     sf::IntRect getBoundingBox() const;
-	void draw(sf::RenderTarget& target);
-    void notifyGroundDistance(int distance);
-    void notifyCeilingDistance(int distance);
+    void draw(sf::RenderTarget& target);
 
     void setState(State s);
     void unsetState(State s);

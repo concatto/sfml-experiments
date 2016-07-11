@@ -3,62 +3,24 @@
 #include "ParticleEmitter.h"
 #include "Utility.h"
 #include "World.h"
+#include "MovementManager.h"
 #include <iostream>
 #include <vector>
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
-#include <limits>
-
-//enum Direction {Up, Down, Left, Right};
 
 void moveIfPressed(sf::View& view, sf::Keyboard::Key key, float x, float y) {
-	if (sf::Keyboard::isKeyPressed(key)) {
-		view.move(x, y);
-	}
-}
-
-int raycastDown(const World& world, sf::Vector2f point) {
-    sf::Vector2f tileSize = world.getTileSize();
-
-    int x = point.x / tileSize.x;
-    int y = point.y / tileSize.y;
-
-    for (unsigned int i = y; i < world.getRowCount(); i++) {
-        if (world.getTileType(i, x) == World::Collidable) {
-            return (i * tileSize.y) - (point.y);
-        }
+    if (sf::Keyboard::isKeyPressed(key)) {
+        view.move(x, y);
     }
-
-    return -1;
 }
 
-int raycastUp(const World& world, sf::Vector2f point) {
-    sf::Vector2f tileSize = world.getTileSize();
-
-    int x = point.x / tileSize.x;
-    int y = point.y / tileSize.y;
-
-    for (int i = y; i >= 0; i--) {
-        if (world.getTileType(i, x) == World::Collidable) {
-            return (point.y) - ((i + 1) * tileSize.y);
-        }
-    }
-
-    return point.y;
+void centerWindow(sf::Window& window) {
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    sf::Vector2u windowSize = window.getSize();
+    window.setPosition(sf::Vector2i((desktop.width / 2.0) - (windowSize.x / 2.0), (desktop.height / 2.0) - (windowSize.y / 2.0)));
 }
-
-
-void collide(const World& world, Character& c) {
-    sf::IntRect box = c.getBoundingBox();
-
-    int down = raycastDown(world, sf::Vector2f(box.left + (box.width / 2.0), box.top + box.height));
-    int up = raycastUp(world, sf::Vector2f(box.left + (box.width / 2.0), box.top));
-
-    c.notifyGroundDistance(down);
-    c.notifyCeilingDistance(up);
-}
-
 
 int main() {
 	std::srand(std::time(nullptr));
@@ -67,20 +29,14 @@ int main() {
 	const int height = 768;
 
 	sf::RenderWindow window(sf::VideoMode(width, height), "SFML");
-	window.setFramerateLimit(60);
+    window.setFramerateLimit(60);
+    centerWindow(window);
 
 	sf::Texture tileset;
 	tileset.loadFromFile("TileFrames.png");
 
-	//Centering
-	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-	sf::Vector2u windowSize = window.getSize();
-	window.setPosition(sf::Vector2i((desktop.width / 2.0) - (windowSize.x / 2.0), (desktop.height / 2.0) - (windowSize.y / 2.0)));
-
-	double xCenter = windowSize.x / 2.0;
-	double yCenter = windowSize.y / 2.0;
-
-	sf::View view(sf::Vector2f(xCenter, yCenter), sf::Vector2f(windowSize.x, windowSize.y));
+    sf::Vector2u windowSize = window.getSize();
+    sf::View view(sf::Vector2f(windowSize.x / 2.0, windowSize.y / 2.0), sf::Vector2f(windowSize.x, windowSize.y));
 
 	std::vector<std::string> level;
 	for (int k = 0; k < 24; k++) {
@@ -105,8 +61,11 @@ int main() {
 
 	sf::Texture tex;
 	tex.loadFromFile("walk.png");
-	Character c(tex, sf::Vector2u(30, 40));
+
+    Character c(tex, sf::Vector2u(26, 40));
     c.setPosition(100, 360);
+
+    MovementManager movement(world, c);
 
 	sf::RenderTexture buffer;
 	buffer.create(width, height);
@@ -117,9 +76,11 @@ int main() {
 	ParticleEmitter emitter(9000);
 
 	sf::Shader shader;
-	shader.loadFromFile("glow.frag", sf::Shader::Fragment);
+    //shader.loadFromFile("glow.frag", sf::Shader::Fragment);
 	shader.setParameter("texture", sf::Shader::CurrentTexture);
 	shader.setParameter("step", sf::Vector2f(1.0 / width, 1.0 / height));
+
+    sf::Clock clock;
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -140,13 +101,9 @@ int main() {
 			view.zoom(1.1);
 		}
 
-
-        collide(world, c);
-
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
             c.jump();
         }
-
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			c.accelerate();
@@ -167,10 +124,12 @@ int main() {
 			c.moveLeft();
 		}
 
+        float deltaTime = clock.restart().asMilliseconds() * 0.06;
+        c.update();
+        movement.update(deltaTime);
 		emitter.update();
-		c.update();
 		emitter.setOrigin(c.getPosition());
-		emitter.setInvert(!c.isFacingRight());
+        emitter.setInvert(!c.isFacingRight());
 
 		window.clear();
 		window.setView(view);

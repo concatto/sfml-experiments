@@ -4,7 +4,17 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-LIBS += -lsfml-graphics -lsfml-window -lsfml-system
+QMAKE_CXXFLAGS += -D__NO_INLINE__
+
+win32 {
+    INCLUDEPATH += "C:\Users\Fernando\Downloads\SFML-2.3.2-sources\SFML-2.3.2\include"
+    LIBS += -L"C:\Users\Fernando\Downloads\SFML-2.3.2-sources\SFML-2.3.2\binaries\lib"
+    LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-main
+}
+
+!win32 {
+    LIBS += -lsfml-graphics -lsfml-window -lsfml-system
+}
 
 SOURCES += \
     Animation.cpp \
@@ -14,7 +24,9 @@ SOURCES += \
     Tile.cpp \
     Utility.cpp \
     World.cpp \
-    main.cpp
+    main.cpp \
+    MovementManager.cpp \
+    AnimationManager.cpp
 
 HEADERS += \
     Animation.h \
@@ -23,5 +35,7 @@ HEADERS += \
     ParticleEmitter.h \
     Tile.h \
     Utility.h \
-    World.h
+    World.h \
+    MovementManager.h \
+    AnimationManager.h
 

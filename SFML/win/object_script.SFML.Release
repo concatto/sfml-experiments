@@ -1,0 +1,12 @@
+INPUT(
+./release\Animation.o
+./release\Character.o
+./release\Particle.o
+./release\ParticleEmitter.o
+./release\Tile.o
+./release\Utility.o
+./release\World.o
+./release\main.o
+./release\MovementManager.o
+./release\AnimationManager.o
+);

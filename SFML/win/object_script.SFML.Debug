@@ -1,0 +1,12 @@
+INPUT(
+./debug\Animation.o
+./debug\Character.o
+./debug\Particle.o
+./debug\ParticleEmitter.o
+./debug\Tile.o
+./debug\Utility.o
+./debug\World.o
+./debug\main.o
+./debug\MovementManager.o
+./debug\AnimationManager.o
+);
