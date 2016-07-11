@@ -7,8 +7,16 @@ MovementManager::MovementManager(const World& world, Character& character) : wor
 }
 
 void MovementManager::update(float deltaTime) {
-    int down = calculateDistance(character, Down) - 1;
     float verticalMovement = character.getVerticalForce();
+
+    int up = calculateDistance(character, Up) - 1;
+    if (up <= verticalMovement) {
+        character.move(0, -up);
+        character.setVerticalForce(0);
+        verticalMovement = character.getVerticalForce();
+    }
+
+    int down = calculateDistance(character, Down) - 1;
     if (down <= -verticalMovement) {
         character.move(0, down);
         character.setState(Character::Ground);
@@ -21,13 +29,6 @@ void MovementManager::update(float deltaTime) {
         character.move(0, -verticalMovement);
         character.setVerticalForce(verticalMovement - Gravity);
     }
-
-    int up = calculateDistance(character, Up);
-    if (up < verticalMovement) {
-        character.move(0, -up);
-        character.setVerticalForce(0);
-    }
-
 
     if (character.getState(Character::Walk)) {
         int horizontalDistance = calculateDistance(character, character.isFacingRight() ? Right : Left) - 1;

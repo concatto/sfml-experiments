@@ -1,22 +1,24 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
 
-#include "Animation.h"
+#include "AnimationManager.h"
 #include <SFML/Graphics.hpp>
 
 class Character : public sf::Sprite {
 private:
 	enum Speed {Fast = 10, Normal = 2};
 
-	static std::vector<Animation> animations;
-	sf::Uint32 state;
-	bool facingRight;
-    float movementSpeed;
+    sf::Uint32 state = 0;
+    bool facingRight = true;
+    float movementSpeed = Normal;
+    float verticalForce = 0;
     sf::Vector2u sizeBounds;
-    float verticalForce;
+    AnimationManager animationManager;
+
+    void walk();
 
 public:
-    enum State {None = 0, Stand = 1, Walk = 2, Ground = 4};
+    enum State {Temp = 0, Stand = 1, Walk = 2, Ground = 4};
 
 	Character(const sf::Texture& texture, sf::Vector2u sizeBounds);
 

@@ -17,7 +17,6 @@ win32 {
 }
 
 SOURCES += \
-    Animation.cpp \
     Character.cpp \
     Particle.cpp \
     ParticleEmitter.cpp \
@@ -29,7 +28,6 @@ SOURCES += \
     AnimationManager.cpp
 
 HEADERS += \
-    Animation.h \
     Character.h \
     Particle.h \
     ParticleEmitter.h \

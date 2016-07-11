@@ -8,28 +8,30 @@
 #include <iostream>
 #include "Character.h"
 
-std::vector<Animation> Character::animations {
-    Animation({sf::IntRect(1240, 0, 124, 77)}, Animation::Normal),
-    Animation(Animation::generateFrames(10, sf::Vector2i(124, 77)), Animation::Normal)
-};
-
-
 Character::Character(const sf::Texture& texture, sf::Vector2u sizeBounds)
-    : sf::Sprite(texture), state(State::None), facingRight(true), movementSpeed(Speed::Normal), sizeBounds(sizeBounds) {
+    : sf::Sprite(texture), sizeBounds(sizeBounds), animationManager(*this) {
+
+    animationManager.loadAnimations({
+        {sf::IntRect(1240, 0, 124, 77)},
+        AnimationManager::generateFrames(sf::Vector2i(124, 77), 10)
+    });
 
     stand();
-
+    animationManager.beginAnimation(0);
     sf::IntRect rect = getTextureRect();
     setOrigin(rect.width / 2.0, 0);
 }
 
 void Character::update() {
     setScale(facingRight ? 1 : -1, 1);
-
+    animationManager.update();
 }
 
 void Character::stand() {
-    unsetState(State::Walk);
+    if (getState(State::Walk)) {
+        unsetState(State::Walk);
+        animationManager.beginAnimation(0);
+    }
 }
 
 //jsfiddle.net/LyM87
@@ -42,20 +44,29 @@ void Character::jump() {
 
 void Character::accelerate() {
     movementSpeed = Speed::Fast;
+    animationManager.setSpeed(AnimationManager::Fast);
 }
 
 void Character::slow() {
     movementSpeed = Speed::Normal;
+    animationManager.setSpeed(AnimationManager::Normal);
 }
 
 void Character::moveLeft() {
-    setState(State::Walk);
     facingRight = false;
+    walk();
 }
 
 void Character::moveRight() {
-    setState(State::Walk);
     facingRight = true;
+    walk();
+}
+
+void Character::walk() {
+    if (!getState(Walk)) {
+        setState(State::Walk);
+        animationManager.beginAnimation(1);
+    }
 }
 
 bool Character::isFacingRight() const {

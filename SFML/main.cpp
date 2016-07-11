@@ -10,6 +10,32 @@
 #include <ctime>
 #include <cmath>
 
+std::vector<std::string> generateLevel(int rows, int columns) {
+    std::vector<std::string> level;
+
+    int terrainLine = rows * 0.7;
+
+    for (int k = 0; k < rows; k++) {
+        std::string row = "";
+        for (int i = 0; i < columns; i++) {
+            if (k > terrainLine) {
+                row.push_back('1');
+            } else if (k == terrainLine) {
+                row.push_back('0');
+            } else {
+                if (Utility::random() < 0.05) {
+                    row.push_back('0');
+                } else {
+                    row.push_back(static_cast<int>(Utility::random(4, 6) + 0.5) + '0');
+                }
+            }
+        }
+        level.push_back(row);
+    }
+
+    return level;
+}
+
 void moveIfPressed(sf::View& view, sf::Keyboard::Key key, float x, float y) {
     if (sf::Keyboard::isKeyPressed(key)) {
         view.move(x, y);
@@ -38,24 +64,7 @@ int main() {
     sf::Vector2u windowSize = window.getSize();
     sf::View view(sf::Vector2f(windowSize.x / 2.0, windowSize.y / 2.0), sf::Vector2f(windowSize.x, windowSize.y));
 
-	std::vector<std::string> level;
-	for (int k = 0; k < 24; k++) {
-		std::string row = "";
-		for (int i = 0; i < 100; i++) {
-			if (k > 17) {
-				row.push_back('1');
-			} else if (k == 17) {
-				row.push_back('0');
-			} else {
-                if (Utility::random() < 0.05) {
-                    row.push_back('0');
-                } else {
-                    row.push_back(static_cast<int>(Utility::random(4, 6) + 0.5) + '0');
-                }
-			}
-		}
-		level.push_back(row);
-	}
+    std::vector<std::string> level = generateLevel(25, 100);
 
 	World world(tileset, level, sf::Vector2f(32, 32));
 
@@ -68,7 +77,7 @@ int main() {
     MovementManager movement(world, c);
 
 	sf::RenderTexture buffer;
-	buffer.create(width, height);
+    buffer.create(width * 2, height);
 
 	sf::RenderTexture buffer2;
 	buffer2.create(width, height);
@@ -143,6 +152,8 @@ int main() {
 		buffer2.clear(sf::Color::Transparent);
 		buffer2.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
 		buffer2.display();*/
+
+        view.setCenter(c.getPosition().x, c.getBoundingBox().top);
 
 		shader.setParameter("direction", sf::Vector2f(0, 1));
 		window.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
