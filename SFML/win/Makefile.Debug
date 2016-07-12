@@ -43,8 +43,7 @@ OBJECTS_DIR   = debug
 
 ####### Files
 
-SOURCES       = ..\Animation.cpp \
-		..\Character.cpp \
+SOURCES       = ..\Character.cpp \
 		..\Particle.cpp \
 		..\ParticleEmitter.cpp \
 		..\Tile.cpp \
@@ -53,8 +52,7 @@ SOURCES       = ..\Animation.cpp \
 		..\main.cpp \
 		..\MovementManager.cpp \
 		..\AnimationManager.cpp 
-OBJECTS       = debug/Animation.o \
-		debug/Character.o \
+OBJECTS       = debug/Character.o \
 		debug/Particle.o \
 		debug/ParticleEmitter.o \
 		debug/Tile.o \
@@ -64,16 +62,14 @@ OBJECTS       = debug/Animation.o \
 		debug/MovementManager.o \
 		debug/AnimationManager.o
 
-DIST          =  Animation.h \
-		Character.h \
+DIST          =  Character.h \
 		Particle.h \
 		ParticleEmitter.h \
 		Tile.h \
 		Utility.h \
 		World.h \
 		MovementManager.h \
-		AnimationManager.h ..\Animation.cpp \
-		..\Character.cpp \
+		AnimationManager.h ..\Character.cpp \
 		..\Particle.cpp \
 		..\ParticleEmitter.cpp \
 		..\Tile.cpp \
@@ -109,7 +105,7 @@ first: all
 all: Makefile.Debug  $(DESTDIR_TARGET)
 
 $(DESTDIR_TARGET):  $(OBJECTS) 
-	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) object_script.SFML.Debug  $(LIBS)
+	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS)  $(LIBS)
 
 qmake: FORCE
 	@$(QMAKE) -spec win32-g++ "CONFIG+=debug" -o Makefile.Debug ..\SFML.pro
@@ -120,7 +116,7 @@ dist:
 	$(ZIP) SFML.zip $(SOURCES) $(DIST) ..\..\SFML.pro C:\Qt\5.5\mingw492_32\mkspecs\features\spec_pre.prf C:\Qt\5.5\mingw492_32\mkspecs\qdevice.pri C:\Qt\5.5\mingw492_32\mkspecs\features\device_config.prf C:\Qt\5.5\mingw492_32\mkspecs\qconfig.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcollision.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcollision_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_clucene_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_core.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_core_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_designer.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_gui.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_help.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_help_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_network.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_network_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_platformsupport_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qml.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_quick.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_script.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_script_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_sql.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_svg.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_xml.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\5.5\mingw492_32\mkspecs\features\qt_functions.prf C:\Qt\5.5\mingw492_32\mkspecs\features\qt_config.prf C:\Qt\5.5\mingw492_32\mkspecs\features\win32\qt_config.prf C:\Qt\5.5\mingw492_32\mkspecs\win32-g++\qmake.conf C:\Qt\5.5\mingw492_32\mkspecs\features\spec_post.prf C:\Qt\5.5\mingw492_32\mkspecs\features\exclusive_builds.prf C:\Qt\5.5\mingw492_32\mkspecs\features\default_pre.prf C:\Qt\5.5\mingw492_32\mkspecs\features\win32\default_pre.prf C:\Qt\5.5\mingw492_32\mkspecs\features\resolve_config.prf C:\Qt\5.5\mingw492_32\mkspecs\features\exclusive_builds_post.prf C:\Qt\5.5\mingw492_32\mkspecs\features\default_post.prf C:\Qt\5.5\mingw492_32\mkspecs\features\build_pass.prf C:\Qt\5.5\mingw492_32\mkspecs\features\win32\console.prf C:\Qt\5.5\mingw492_32\mkspecs\features\c++11.prf C:\Qt\5.5\mingw492_32\mkspecs\features\win32\rtti.prf C:\Qt\5.5\mingw492_32\mkspecs\features\precompile_header.prf C:\Qt\5.5\mingw492_32\mkspecs\features\warn_on.prf C:\Qt\5.5\mingw492_32\mkspecs\features\testcase_targets.prf C:\Qt\5.5\mingw492_32\mkspecs\features\exceptions.prf C:\Qt\5.5\mingw492_32\mkspecs\features\yacc.prf C:\Qt\5.5\mingw492_32\mkspecs\features\lex.prf ..\SFML.pro  NO_PCH_SOURCES YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\Animation.o debug\Character.o debug\Particle.o debug\ParticleEmitter.o debug\Tile.o debug\Utility.o debug\World.o debug\main.o debug\MovementManager.o debug\AnimationManager.o
+	-$(DEL_FILE) debug\Character.o debug\Particle.o debug\ParticleEmitter.o debug\Tile.o debug\Utility.o debug\World.o debug\main.o debug\MovementManager.o debug\AnimationManager.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -142,80 +138,8 @@ compiler_clean:
 
 ####### Compile
 
-debug/Animation.o: ../Animation.cpp ../Animation.h \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Config.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Clock.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Export.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Time.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Err.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/FileInputStream.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/InputStream.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/NonCopyable.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Lock.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/MemoryInputStream.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Mutex.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Sleep.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/String.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Utf.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Utf.inl \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/String.inl \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Thread.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Thread.inl \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/ThreadLocal.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/ThreadLocalPtr.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/ThreadLocalPtr.inl \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Vector2.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Vector2.inl \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Vector3.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Vector3.inl \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Context.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Export.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/GlResource.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/ContextSettings.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Event.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Joystick.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Keyboard.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Mouse.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Sensor.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Touch.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/VideoMode.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Window.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/WindowHandle.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/WindowStyle.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/BlendMode.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Export.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/CircleShape.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Shape.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Drawable.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/RenderStates.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Transform.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Rect.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Rect.inl \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Transformable.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/VertexArray.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Vertex.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Color.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/PrimitiveType.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/ConvexShape.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Font.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Glyph.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Texture.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Image.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/RectangleShape.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/RenderTarget.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/View.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/RenderTexture.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/RenderWindow.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Shader.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Sprite.hpp \
-		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Text.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\Animation.o ..\Animation.cpp
-
 debug/Character.o: ../Character.cpp ../Character.h \
-		../Animation.h \
+		../AnimationManager.h \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System.hpp \
@@ -582,7 +506,7 @@ debug/main.o: ../main.cpp ../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/inclu
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Sprite.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Text.hpp \
 		../Character.h \
-		../Animation.h \
+		../AnimationManager.h \
 		../ParticleEmitter.h \
 		../Particle.h \
 		../Utility.h \
@@ -592,7 +516,7 @@ debug/main.o: ../main.cpp ../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/inclu
 
 debug/MovementManager.o: ../MovementManager.cpp ../MovementManager.h \
 		../Character.h \
-		../Animation.h \
+		../AnimationManager.h \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System.hpp \
@@ -665,7 +589,76 @@ debug/MovementManager.o: ../MovementManager.cpp ../MovementManager.h \
 		../World.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\MovementManager.o ..\MovementManager.cpp
 
-debug/AnimationManager.o: ../AnimationManager.cpp ../AnimationManager.h
+debug/AnimationManager.o: ../AnimationManager.cpp ../AnimationManager.h \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Config.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Clock.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Export.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Time.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Err.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/FileInputStream.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/InputStream.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/NonCopyable.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Lock.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/MemoryInputStream.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Mutex.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Sleep.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/String.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Utf.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Utf.inl \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/String.inl \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Thread.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Thread.inl \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/ThreadLocal.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/ThreadLocalPtr.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/ThreadLocalPtr.inl \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Vector2.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Vector2.inl \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Vector3.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System/Vector3.inl \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Context.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Export.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/GlResource.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/ContextSettings.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Event.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Joystick.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Keyboard.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Mouse.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Sensor.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Touch.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/VideoMode.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/Window.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/WindowHandle.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window/WindowStyle.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/BlendMode.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Export.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/CircleShape.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Shape.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Drawable.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/RenderStates.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Transform.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Rect.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Rect.inl \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Transformable.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/VertexArray.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Vertex.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Color.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/PrimitiveType.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/ConvexShape.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Font.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Glyph.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Texture.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Image.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/RectangleShape.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/RenderTarget.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/View.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/RenderTexture.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/RenderWindow.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Shader.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Sprite.hpp \
+		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Text.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\AnimationManager.o ..\AnimationManager.cpp
 
 ####### Install

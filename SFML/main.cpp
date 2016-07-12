@@ -36,6 +36,12 @@ std::vector<std::string> generateLevel(int rows, int columns) {
     return level;
 }
 
+bool viewWithinBounds(const World& world, const Character& c, View& view) {
+    sf::Vector2u center = c.getCenter();
+    sf::Vector2f tileSize = world.getTileSize();
+
+}
+
 void moveIfPressed(sf::View& view, sf::Keyboard::Key key, float x, float y) {
     if (sf::Keyboard::isKeyPressed(key)) {
         view.move(x, y);
@@ -77,17 +83,17 @@ int main() {
     MovementManager movement(world, c);
 
 	sf::RenderTexture buffer;
-    buffer.create(width * 2, height);
+    buffer.create(width, height);
 
 	sf::RenderTexture buffer2;
 	buffer2.create(width, height);
 
 	ParticleEmitter emitter(9000);
 
-	sf::Shader shader;
+    sf::Shader shader;
     //shader.loadFromFile("glow.frag", sf::Shader::Fragment);
-	shader.setParameter("texture", sf::Shader::CurrentTexture);
-	shader.setParameter("step", sf::Vector2f(1.0 / width, 1.0 / height));
+    shader.setParameter("texture", sf::Shader::CurrentTexture);
+    shader.setParameter("step", sf::Vector2f(1.0 / width, 1.0 / height));
 
     sf::Clock clock;
 
@@ -133,16 +139,21 @@ int main() {
 			c.moveLeft();
 		}
 
+
         float deltaTime = clock.restart().asMilliseconds() * 0.06;
-        c.update();
         movement.update(deltaTime);
+        c.update();
 		emitter.update();
 		emitter.setOrigin(c.getPosition());
         emitter.setInvert(!c.isFacingRight());
 
+        if (viewWithinBounds(world, c, view)) {
+            view.setCenter(c.getBoundingBox().left, c.getBoundingBox().top);
+        }
+
 		window.clear();
 		window.setView(view);
-		window.draw(world);
+        window.draw(world);
 
 		buffer.clear(sf::Color::Transparent);
 		buffer.draw(emitter);
@@ -151,12 +162,10 @@ int main() {
 		shader.setParameter("direction", sf::Vector2f(1, 0));
 		buffer2.clear(sf::Color::Transparent);
 		buffer2.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
-		buffer2.display();*/
-
-        view.setCenter(c.getPosition().x, c.getBoundingBox().top);
+        buffer2.display();*/
 
 		shader.setParameter("direction", sf::Vector2f(0, 1));
-		window.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
+        //window.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
 		window.draw(c);
 		c.draw(window);
 

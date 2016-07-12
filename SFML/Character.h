@@ -35,6 +35,7 @@ public:
     float getMovementSpeed() const;
     void setVerticalForce(float verticalForce);
 	sf::Vector2u getSizeBounds() const;
+    sf::Vector2u getCenter() const;
     sf::IntRect getBoundingBox() const;
     void draw(sf::RenderTarget& target);
 

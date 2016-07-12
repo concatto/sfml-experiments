@@ -89,6 +89,10 @@ sf::Vector2u Character::getSizeBounds() const {
     return sizeBounds;
 }
 
+sf::Vector2u Character::getCenter() const {
+    return sf::Vector2u(getPosition().x, getBoundingBox().top + (sizeBounds.y / 2.0));
+}
+
 sf::IntRect Character::getBoundingBox() const {
     sf::Vector2f pos = getPosition();
     return sf::IntRect(pos.x - (sizeBounds.x / 2.0), pos.y + (getTextureRect().height - sizeBounds.y), sizeBounds.x, sizeBounds.y);
