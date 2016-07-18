@@ -2,10 +2,11 @@
 #define MOVEMENTMANAGER_H
 
 #include "Character.h"
+#include "Updatable.h"
 #include "World.h"
 #include <SFML/Graphics.hpp>
 
-class MovementManager
+class MovementManager : public Updatable
 {
     const float Gravity = 0.5;
     enum Direction {Up, Down, Left, Right};
@@ -15,7 +16,7 @@ class MovementManager
 public:
     MovementManager(const World& world, Character& character);
 
-    void update(float deltaTime);
+    virtual void update() override;
     void moveCharacter(Character& character, float distance, Direction direction);
 private:
     static inline float distance(sf::Vector2i coords, sf::Vector2f tileSize, sf::IntRect box, Direction direction);

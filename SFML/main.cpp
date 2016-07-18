@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include <utility>
+#include <functional>
 
 std::vector<std::string> generateLevel(int rows, int columns) {
     std::vector<std::string> level;
@@ -36,10 +38,14 @@ std::vector<std::string> generateLevel(int rows, int columns) {
     return level;
 }
 
-bool viewWithinBounds(const World& world, const Character& c, View& view) {
-    sf::Vector2u center = c.getCenter();
+void viewWithinBounds(const World& world, sf::View& view) {
+    sf::Vector2f halfSize = sf::Vector2f(view.getSize().x / 2.0, view.getSize().y / 2.0);
     sf::Vector2f tileSize = world.getTileSize();
+    sf::Vector2f center = view.getCenter();
+    float y = std::min((world.getRowCount() * tileSize.y) - halfSize.y, std::max(halfSize.y, center.y));
+    float x = std::min((world.getColumnCount()* tileSize.x) - halfSize.x, std::max(halfSize.x, center.x));
 
+    view.setCenter(x, y);
 }
 
 void moveIfPressed(sf::View& view, sf::Keyboard::Key key, float x, float y) {
@@ -97,6 +103,8 @@ int main() {
 
     sf::Clock clock;
 
+    std::vector<std::reference_wrapper<Updatable>> updatables{movement, c, emitter};
+
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -141,15 +149,16 @@ int main() {
 
 
         float deltaTime = clock.restart().asMilliseconds() * 0.06;
-        movement.update(deltaTime);
-        c.update();
-		emitter.update();
+
+        for (Updatable& upd : updatables) {
+            upd.update();
+        }
+
 		emitter.setOrigin(c.getPosition());
         emitter.setInvert(!c.isFacingRight());
 
-        if (viewWithinBounds(world, c, view)) {
-            view.setCenter(c.getBoundingBox().left, c.getBoundingBox().top);
-        }
+        view.setCenter(c.getBoundingBox().left, c.getBoundingBox().top);
+        viewWithinBounds(world, view);
 
 		window.clear();
 		window.setView(view);

@@ -35,5 +35,6 @@ HEADERS += \
     Utility.h \
     World.h \
     MovementManager.h \
-    AnimationManager.h
+    AnimationManager.h \
+    Updatable.h
 

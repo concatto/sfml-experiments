@@ -6,6 +6,7 @@
  */
 
 #include "World.h"
+#include <algorithm>
 
 World::World(const sf::Texture& texture, std::vector<std::string> map, sf::Vector2f tileSize)
 	: vertices(sf::Quads), texture(texture), tileSize(tileSize) {
@@ -18,14 +19,21 @@ sf::Vector2f World::getTileSize() const
     return tileSize;
 }
 
-World::TileType World::getTileType(unsigned int x, unsigned int y) const
+World::TileType World::getTileType(int x, int y) const
 {
+    y = std::min(getRowCount() - 1, std::max(0, y));
+    x = std::min(getColumnCount() - 1, std::max(0, x));
     return tiles[y][x];
 }
 
-unsigned int World::getRowCount() const
+int World::getRowCount() const
 {
     return tiles.size();
+}
+
+int World::getColumnCount() const
+{
+    return columns;
 }
 
 sf::Vector2i World::toTileCoordinates(sf::Vector2f point) const
@@ -41,6 +49,9 @@ void World::createTiles(std::vector<std::string> map) {
 	for (unsigned int i = 0; i < map.size(); i++) {
 		std::string& row = map[i];
         std::vector<TileType> tileRow;
+        if (row.size() > columns) {
+            columns = row.size();
+        }
 
 		for (unsigned int j = 0; j < row.size(); j++) {
 			int type = row[j] - '0';

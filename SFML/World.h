@@ -17,9 +17,10 @@ public:
 
 private:
     std::vector<std::vector<TileType>> tiles;
-	sf::VertexArray vertices;
+    sf::VertexArray vertices = sf::VertexArray(sf::Quads);
 	const sf::Texture& texture;
 	sf::Vector2f tileSize;
+    unsigned int columns = 0;
 
 	void createTiles(std::vector<std::string> map);
 
@@ -27,8 +28,9 @@ public:
 	World(const sf::Texture& texture, std::vector<std::string> map, sf::Vector2f tileSize);
 
 	sf::Vector2f getTileSize() const;
-    TileType getTileType(unsigned int x, unsigned int y) const;
-    unsigned int getRowCount() const;
+    TileType getTileType(int x, int y) const;
+    int getRowCount() const;
+    int getColumnCount() const;
     sf::Vector2i toTileCoordinates(sf::Vector2f point) const;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

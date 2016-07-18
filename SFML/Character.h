@@ -2,9 +2,10 @@
 #define CHARACTER_H_
 
 #include "AnimationManager.h"
+#include "Updatable.h"
 #include <SFML/Graphics.hpp>
 
-class Character : public sf::Sprite {
+class Character : public sf::Sprite, public Updatable {
 private:
 	enum Speed {Fast = 10, Normal = 2};
 
@@ -22,7 +23,7 @@ public:
 
 	Character(const sf::Texture& texture, sf::Vector2u sizeBounds);
 
-	void update();
+    virtual void update() override;
 	void accelerate();
 	void slow();
 	void moveLeft();

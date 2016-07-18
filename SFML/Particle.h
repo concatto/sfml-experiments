@@ -8,9 +8,10 @@
 #ifndef PARTICLE_H_
 #define PARTICLE_H_
 
+#include "Updatable.h"
 #include <SFML/Graphics.hpp>
 
-class Particle {
+class Particle : public Updatable {
 private:
 	float angle;
 	float speed;
@@ -24,7 +25,7 @@ public:
 	Particle();
 
 	void spawn(bool inverse = false, sf::Vector2f origin = sf::Vector2f());
-	void update();
+    virtual void update() override;
 	float getRemainingTime() const;
 	float getAngle() const;
 	float getSpeed() const;

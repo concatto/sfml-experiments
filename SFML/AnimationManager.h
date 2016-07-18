@@ -1,10 +1,11 @@
 #ifndef ANIMATIONMANAGER_H
 #define ANIMATIONMANAGER_H
 
+#include "Updatable.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class AnimationManager
+class AnimationManager : public Updatable
 {
     using Animation = std::vector<sf::IntRect>;
 
@@ -20,7 +21,7 @@ public:
 
     AnimationManager(sf::Sprite& target);
 
-    void update();
+    virtual void update() override;
     void updateTextureRect();
     static Animation generateFrames(sf::Vector2i size, int amount, sf::Vector2i startingPoint = sf::Vector2i(0, 0));
     void beginAnimation(unsigned int index);

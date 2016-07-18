@@ -69,7 +69,8 @@ DIST          =  Character.h \
 		Utility.h \
 		World.h \
 		MovementManager.h \
-		AnimationManager.h ..\Character.cpp \
+		AnimationManager.h \
+		Updatable.h ..\Character.cpp \
 		..\Particle.cpp \
 		..\ParticleEmitter.cpp \
 		..\Tile.cpp \
@@ -140,6 +141,7 @@ compiler_clean:
 
 release/Character.o: ../Character.cpp ../Character.h \
 		../AnimationManager.h \
+		../Updatable.h \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System.hpp \
@@ -212,6 +214,7 @@ release/Character.o: ../Character.cpp ../Character.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\Character.o ..\Character.cpp
 
 release/Particle.o: ../Particle.cpp ../Particle.h \
+		../Updatable.h \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System.hpp \
@@ -286,6 +289,7 @@ release/Particle.o: ../Particle.cpp ../Particle.h \
 
 release/ParticleEmitter.o: ../ParticleEmitter.cpp ../ParticleEmitter.h \
 		../Particle.h \
+		../Updatable.h \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System.hpp \
@@ -507,6 +511,7 @@ release/main.o: ../main.cpp ../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/inc
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics/Text.hpp \
 		../Character.h \
 		../AnimationManager.h \
+		../Updatable.h \
 		../ParticleEmitter.h \
 		../Particle.h \
 		../Utility.h \
@@ -517,6 +522,7 @@ release/main.o: ../main.cpp ../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/inc
 release/MovementManager.o: ../MovementManager.cpp ../MovementManager.h \
 		../Character.h \
 		../AnimationManager.h \
+		../Updatable.h \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System.hpp \
@@ -590,6 +596,7 @@ release/MovementManager.o: ../MovementManager.cpp ../MovementManager.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\MovementManager.o ..\MovementManager.cpp
 
 release/AnimationManager.o: ../AnimationManager.cpp ../AnimationManager.h \
+		../Updatable.h \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Graphics.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/Window.hpp \
 		../../../Downloads/SFML-2.3.2-sources/SFML-2.3.2/include/SFML/System.hpp \

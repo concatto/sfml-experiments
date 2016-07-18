@@ -6,7 +6,7 @@ MovementManager::MovementManager(const World& world, Character& character) : wor
 
 }
 
-void MovementManager::update(float deltaTime) {
+void MovementManager::update() {
     float verticalMovement = character.getVerticalForce();
 
     int up = calculateDistance(character, Up) - 1;
