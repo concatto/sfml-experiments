@@ -25,7 +25,8 @@ SOURCES += \
     World.cpp \
     main.cpp \
     MovementManager.cpp \
-    AnimationManager.cpp
+    AnimationManager.cpp \
+    Game.cpp
 
 HEADERS += \
     Character.h \
@@ -36,5 +37,6 @@ HEADERS += \
     World.h \
     MovementManager.h \
     AnimationManager.h \
-    Updatable.h
+    Updatable.h \
+    Game.h
 

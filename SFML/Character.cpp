@@ -8,15 +8,13 @@
 #include <iostream>
 #include "Character.h"
 
-Character::Character(const sf::Texture& texture, sf::Vector2u sizeBounds)
-    : sf::Sprite(texture), sizeBounds(sizeBounds), animationManager(*this) {
+Character::Character() : animationManager(*this) {
 
     animationManager.loadAnimations({
         {sf::IntRect(1240, 0, 124, 77)},
         AnimationManager::generateFrames(sf::Vector2i(124, 77), 10)
     });
 
-    stand();
     animationManager.beginAnimation(0);
     sf::IntRect rect = getTextureRect();
     setOrigin(rect.width / 2.0, 0);
@@ -83,6 +81,11 @@ float Character::getMovementSpeed() const {
 
 void Character::setVerticalForce(float verticalForce) {
     this->verticalForce = verticalForce;
+}
+
+void Character::setSizeBounds(sf::Vector2u sizeBounds)
+{
+    this->sizeBounds = sizeBounds;
 }
 
 sf::Vector2u Character::getSizeBounds() const {

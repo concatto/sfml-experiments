@@ -11,34 +11,10 @@
 #include <cmath>
 #include <utility>
 #include <functional>
+#include "Game.h"
 
-std::vector<std::string> generateLevel(int rows, int columns) {
-    std::vector<std::string> level;
 
-    int terrainLine = rows * 0.7;
-
-    for (int k = 0; k < rows; k++) {
-        std::string row = "";
-        for (int i = 0; i < columns; i++) {
-            if (k > terrainLine) {
-                row.push_back('1');
-            } else if (k == terrainLine) {
-                row.push_back('0');
-            } else {
-                if (Utility::random() < 0.05) {
-                    row.push_back('0');
-                } else {
-                    row.push_back(static_cast<int>(Utility::random(4, 6) + 0.5) + '0');
-                }
-            }
-        }
-        level.push_back(row);
-    }
-
-    return level;
-}
-
-void viewWithinBounds(const World& world, sf::View& view) {
+void clampView(const World& world, sf::View& view) {
     sf::Vector2f halfSize = sf::Vector2f(view.getSize().x / 2.0, view.getSize().y / 2.0);
     sf::Vector2f tileSize = world.getTileSize();
     sf::Vector2f center = view.getCenter();
@@ -70,40 +46,17 @@ int main() {
     window.setFramerateLimit(60);
     centerWindow(window);
 
-	sf::Texture tileset;
-	tileset.loadFromFile("TileFrames.png");
+    //ParticleEmitter emitter(9000);
 
-    sf::Vector2u windowSize = window.getSize();
-    sf::View view(sf::Vector2f(windowSize.x / 2.0, windowSize.y / 2.0), sf::Vector2f(windowSize.x, windowSize.y));
-
-    std::vector<std::string> level = generateLevel(25, 100);
-
-	World world(tileset, level, sf::Vector2f(32, 32));
-
-	sf::Texture tex;
-	tex.loadFromFile("walk.png");
-
-    Character c(tex, sf::Vector2u(26, 40));
-    c.setPosition(100, 360);
-
-    MovementManager movement(world, c);
-
-	sf::RenderTexture buffer;
-    buffer.create(width, height);
-
-	sf::RenderTexture buffer2;
-	buffer2.create(width, height);
-
-	ParticleEmitter emitter(9000);
-
-    sf::Shader shader;
-    //shader.loadFromFile("glow.frag", sf::Shader::Fragment);
+    /*sf::Shader shader;
+    shader.loadFromFile("glow.frag", sf::Shader::Fragment);
     shader.setParameter("texture", sf::Shader::CurrentTexture);
-    shader.setParameter("step", sf::Vector2f(1.0 / width, 1.0 / height));
+    shader.setParameter("step", sf::Vector2f(1.0 / width, 1.0 / height));*/
 
     sf::Clock clock;
+    Game game(window);
 
-    std::vector<std::reference_wrapper<Updatable>> updatables{movement, c, emitter};
+    //std::vector<std::reference_wrapper<Updatable>> updatables{movement, c, emitter};
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -113,6 +66,9 @@ int main() {
 			}
 		}
 
+        game.update();
+
+        /*
 		moveIfPressed(view, sf::Keyboard::Numpad8, 0, -1);
 		moveIfPressed(view, sf::Keyboard::Numpad2, 0, 1);
 		moveIfPressed(view, sf::Keyboard::Numpad4, -1, 0);
@@ -156,9 +112,8 @@ int main() {
 
 		emitter.setOrigin(c.getPosition());
         emitter.setInvert(!c.isFacingRight());
-
         view.setCenter(c.getBoundingBox().left, c.getBoundingBox().top);
-        viewWithinBounds(world, view);
+        clampView(world, view);
 
 		window.clear();
 		window.setView(view);
@@ -167,18 +122,18 @@ int main() {
 		buffer.clear(sf::Color::Transparent);
 		buffer.draw(emitter);
 		buffer.display();
-/*
+
 		shader.setParameter("direction", sf::Vector2f(1, 0));
 		buffer2.clear(sf::Color::Transparent);
 		buffer2.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
-        buffer2.display();*/
+        buffer2.display();
 
 		shader.setParameter("direction", sf::Vector2f(0, 1));
         //window.draw(sf::Sprite(buffer.getTexture()), sf::RenderStates(&shader));
 		window.draw(c);
 		c.draw(window);
 
-		window.display();
+        window.display();*/
 	}
 
 	return 0;

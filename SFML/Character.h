@@ -21,7 +21,7 @@ private:
 public:
     enum State {Temp = 0, Stand = 1, Walk = 2, Ground = 4};
 
-	Character(const sf::Texture& texture, sf::Vector2u sizeBounds);
+    Character();
 
     virtual void update() override;
 	void accelerate();
@@ -35,6 +35,7 @@ public:
     float getVerticalForce() const;
     float getMovementSpeed() const;
     void setVerticalForce(float verticalForce);
+    void setSizeBounds(sf::Vector2u sizeBounds);
 	sf::Vector2u getSizeBounds() const;
     sf::Vector2u getCenter() const;
     sf::IntRect getBoundingBox() const;

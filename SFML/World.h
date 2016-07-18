@@ -18,15 +18,17 @@ public:
 private:
     std::vector<std::vector<TileType>> tiles;
     sf::VertexArray vertices = sf::VertexArray(sf::Quads);
-	const sf::Texture& texture;
+    sf::Texture* texture;
 	sf::Vector2f tileSize;
     unsigned int columns = 0;
 
 	void createTiles(std::vector<std::string> map);
 
 public:
-	World(const sf::Texture& texture, std::vector<std::string> map, sf::Vector2f tileSize);
+    World();
+    World(sf::Texture* texture, std::vector<std::string> map, sf::Vector2f tileSize);
 
+    void create(sf::Texture* texture, std::vector<std::string> map, sf::Vector2f tileSize);
 	sf::Vector2f getTileSize() const;
     TileType getTileType(int x, int y) const;
     int getRowCount() const;
