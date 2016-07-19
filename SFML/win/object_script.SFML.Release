@@ -1,5 +1,4 @@
 INPUT(
-./release\Animation.o
 ./release\Character.o
 ./release\Particle.o
 ./release\ParticleEmitter.o
@@ -9,4 +8,5 @@ INPUT(
 ./release\main.o
 ./release\MovementManager.o
 ./release\AnimationManager.o
+./release\Game.o
 );

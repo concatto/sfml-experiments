@@ -5,11 +5,12 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 QMAKE_CXXFLAGS += -D__NO_INLINE__
+DEFINES += SFML_STATIC
 
 win32 {
     INCLUDEPATH += "C:\Users\Fernando\Downloads\SFML-2.3.2-sources\SFML-2.3.2\include"
-    LIBS += -L"C:\Users\Fernando\Downloads\SFML-2.3.2-sources\SFML-2.3.2\binaries\lib"
-    LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-main
+    LIBS += -L"C:\Users\Fernando\Downloads\SFML-2.3.2-sources\SFML-2.3.2\build\lib"
+    LIBS += -lsfml-graphics-s -lsfml-window-s -lsfml-system-s
 }
 
 !win32 {
