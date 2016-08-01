@@ -5,12 +5,11 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 QMAKE_CXXFLAGS += -D__NO_INLINE__
-DEFINES += SFML_STATIC
 
 win32 {
     INCLUDEPATH += "C:\Users\Fernando\Downloads\SFML-2.3.2-sources\SFML-2.3.2\include"
-    LIBS += -L"C:\Users\Fernando\Downloads\SFML-2.3.2-sources\SFML-2.3.2\build\lib"
-    LIBS += -lsfml-graphics-s -lsfml-window-s -lsfml-system-s
+    LIBS += -L"C:\Users\Fernando\Downloads\SFML-2.3.2-sources\SFML-2.3.2\binaries\lib"
+    LIBS += -lsfml-graphics -lsfml-window -lsfml-system
 }
 
 !win32 {
@@ -27,7 +26,9 @@ SOURCES += \
     main.cpp \
     MovementManager.cpp \
     AnimationManager.cpp \
-    Game.cpp
+    Game.cpp \
+    Beta/ParticleEmitter2.cpp \
+    Beta/Particle2.cpp
 
 HEADERS += \
     Character.h \
@@ -39,5 +40,7 @@ HEADERS += \
     MovementManager.h \
     AnimationManager.h \
     Updatable.h \
-    Game.h
+    Game.h \
+    Beta/ParticleEmitter2.h \
+    Beta/Particle2.h
 

@@ -10,7 +10,8 @@
 
 class Utility {
 public:
-	static double random(double min = 0, double max = 1);
+    static double random(double min = 0, double max = 1);
+    static double pi(double multiplier = 1, double denominator = 1);
 };
 
 #endif /* UTILITY_H_ */

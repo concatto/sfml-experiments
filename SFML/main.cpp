@@ -1,6 +1,7 @@
 #include "SFML/Graphics.hpp"
 #include "Character.h"
 #include "ParticleEmitter.h"
+#include "Beta/ParticleEmitter2.h"
 #include "Utility.h"
 #include "World.h"
 #include "MovementManager.h"
@@ -48,15 +49,24 @@ int main() {
 
     //ParticleEmitter emitter(9000);
 
-    /*sf::Shader shader;
+    sf::Shader shader;
     shader.loadFromFile("glow.frag", sf::Shader::Fragment);
     shader.setParameter("texture", sf::Shader::CurrentTexture);
-    shader.setParameter("step", sf::Vector2f(1.0 / width, 1.0 / height));*/
+    shader.setParameter("step", sf::Vector2f(width, height));
+
+    sf::RenderTexture firstTex;
+    firstTex.create(width, height);
+
+    sf::RenderTexture secondTex;
+    secondTex.create(width, height);
 
     sf::Clock clock;
     Game game(window);
 
     //std::vector<std::reference_wrapper<Updatable>> updatables{movement, c, emitter};
+
+    ParticleEmitter2 emitter(100);
+    emitter.start();
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -66,7 +76,25 @@ int main() {
 			}
 		}
 
-        game.update();
+        //game.update();
+        emitter.setOrigin(sf::Vector2f(500, 300));
+        emitter.update();
+
+        firstTex.clear(sf::Color::Transparent);
+        firstTex.draw(emitter);
+        firstTex.display();
+
+        shader.setParameter("direction", sf::Vector2f(1, 0));
+
+        secondTex.clear(sf::Color::Transparent);
+        secondTex.draw(sf::Sprite(firstTex.getTexture()), sf::RenderStates(&shader));
+        secondTex.display();
+
+        shader.setParameter("direction", sf::Vector2f(0, 1));
+
+        window.clear();
+        window.draw(sf::Sprite(secondTex.getTexture()), sf::RenderStates(&shader));
+        window.display();
 
         /*
 		moveIfPressed(view, sf::Keyboard::Numpad8, 0, -1);

@@ -12,3 +12,6 @@ double Utility::random(double min, double max) {
 	return ((std::rand() / static_cast<double>(RAND_MAX)) * (max - min)) + min;
 }
 
+double Utility::pi(double multiplier, double denominator) {
+    return (3.14159265359 * multiplier) / denominator;
+}
