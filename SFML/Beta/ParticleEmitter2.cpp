@@ -10,8 +10,8 @@
 #include <cmath>
 #include <iostream>
 
-ParticleEmitter2::ParticleEmitter2(unsigned int particleAmount)
-    : particleAmount(particleAmount), particles(particleAmount), vertices(sf::Triangles, particleAmount * 3), active(false), invert(false) {
+ParticleEmitter2::ParticleEmitter2(unsigned int particleAmount, const sf::Texture& texture)
+    : texture(texture), particleAmount(particleAmount), particles(particleAmount), vertices(sf::Quads, particleAmount * 4), active(false), invert(false) {
 
 }
 
@@ -27,26 +27,35 @@ void ParticleEmitter2::setInvert(bool invert) {
 
 void ParticleEmitter2::update() {
 	for (unsigned int i = 0; i < particleAmount; i++) {
-        updateTriangle(i);
+        updateParticle(i);
 	}
 }
 
-void ParticleEmitter2::updateTriangle(unsigned int i) {
+void ParticleEmitter2::updateParticle(unsigned int i) {
     Particle2& p = particles[i];
     p.update();
+    int count = 4;
 
-    i *= 3;
+    i *= count;
 
     if (p.getRemainingTime() > 0) {
         double angles[] = {
-            Utility::pi(1, 2),
+            /*Utility::pi(1, 2),
             Utility::pi(11, 6),
-            Utility::pi(7, 6)
+            Utility::pi(7, 6)*/
+            Utility::pi(7, 4),
+            Utility::pi(5, 4),
+            Utility::pi(3, 4),
+            Utility::pi(1, 4)
         };
 
-        for (int k = 0; k < 3; k++) {
+        float xs[] = {0, 104, 104, 0};
+        float ys[] = {0, 0, 104, 104};
+
+        float brightness = p.getBrightness();
+        for (int k = 0; k < count; k++) {
             unsigned int a = i + k;
-            vertices[a].color = sf::Color(255, 235 * p.getRemainingTime() + 20, 255 * (p.getRemainingTime() / 2.0), 255 * p.getRemainingTime());
+            vertices[a].color = sf::Color(brightness, brightness, brightness, 255 * p.getRemainingTime());
 
             double distance = p.getSpeed() * ((1 - p.getRemainingTime()) * 20);
             float angle = angles[k] + p.getRotation();
@@ -55,11 +64,12 @@ void ParticleEmitter2::updateTriangle(unsigned int i) {
             float y = std::sin(p.getAngle()) * distance + std::sin(angle) * p.getSize();
 
             vertices[a].position = sf::Vector2f(x, y) + p.getOrigin() + p.getOriginDelta();
+            vertices[a].texCoords = sf::Vector2f(xs[k], ys[k]);
         }
     } else if (active) {
         spawnParticle(p);
     } else {
-        for (int k = 0; k < 3; k++) {
+        for (int k = 0; k < count; k++) {
             unsigned int a = i + k;
             vertices[a].color = sf::Color::Transparent;
         }
@@ -68,19 +78,20 @@ void ParticleEmitter2::updateTriangle(unsigned int i) {
 
 void ParticleEmitter2::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	states.transform *= getTransform();
+    states.texture = &texture;
 	target.draw(vertices, states);
 }
 
 void ParticleEmitter2::start() {
 	active = true;
-	for (unsigned int i = 0; i < particleAmount; i++) {
+    /*for (unsigned int i = 0; i < particleAmount; i++) {
         spawnParticle(particles[i]);
         //vertices[i].position = origin;
-	}
+    }*/
 }
 
 void ParticleEmitter2::spawnParticle(Particle2& p) {
-    p.spawn(Utility::random(Utility::pi(7, 4), Utility::pi(5, 4)), Utility::random(12, 25), Utility::random(0.05, 0.2), Utility::random(18, 30), invert, origin);
+    p.spawn(Utility::random(Utility::pi(7, 4), Utility::pi(5, 4)), Utility::random(12, 25), Utility::random(0.03, 0.17), Utility::random(50, 60), invert, origin);
 }
 
 void ParticleEmitter2::end() {

@@ -65,12 +65,11 @@ int main() {
 
     //std::vector<std::reference_wrapper<Updatable>> updatables{movement, c, emitter};
 
-    ParticleEmitter2 emitter(2000);
-    ParticleEmitter2 emitter2(3000);
-    ParticleEmitter2 emitter3(2000);
+    sf::Texture tex;
+    tex.loadFromFile("smoke.png");
+
+    ParticleEmitter2 emitter(800, tex);
     emitter.start();
-    emitter2.start();
-    emitter3.start();
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -81,16 +80,10 @@ int main() {
 		}
 
         emitter.setActive(sf::Keyboard::isKeyPressed(sf::Keyboard::Space));
-        emitter2.setActive(sf::Keyboard::isKeyPressed(sf::Keyboard::O));
-        emitter3.setActive(sf::Keyboard::isKeyPressed(sf::Keyboard::P));
 
         //game.update();
-        emitter.setOrigin(sf::Vector2f(300, 600));
+        emitter.setOrigin(sf::Vector2f(500, 600));
         emitter.update();
-        emitter2.setOrigin(sf::Vector2f(500, 600));
-        emitter2.update();
-        emitter3.setOrigin(sf::Vector2f(700, 600));
-        emitter3.update();
 
         /*firstTex.clear(sf::Color::Transparent);
         firstTex.draw(emitter);
@@ -107,8 +100,6 @@ int main() {
         window.clear();
         //window.draw(sf::Sprite(secondTex.getTexture()));
         window.draw(emitter);
-        window.draw(emitter2);
-        window.draw(emitter3);
         window.display();
 
         /*

@@ -19,7 +19,7 @@ vec4 makeBlur() {
 	values[4] = 0.0162162162;
 	
 	for (float i = -4f; i <= 4f; i++) {
-		sum += textureDisplaced(i * 1).a * values[int(abs(i))];
+		sum += textureDisplaced(i * 1f).a * values[int(abs(i))];
 	}
 	
 	return vec4(1f, 1f, 1f, sum);

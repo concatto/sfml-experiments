@@ -15,6 +15,7 @@
 
 class ParticleEmitter2 : public sf::Drawable, public sf::Transformable, public Updatable {
 private:
+    const sf::Texture& texture;
 	unsigned int particleAmount;
     std::vector<Particle2> particles;
 	sf::VertexArray vertices;
@@ -22,11 +23,11 @@ private:
 	bool active;
 	bool invert;
 
-    void updateTriangle(unsigned int i);
+    void updateParticle(unsigned int i);
     void spawnParticle(Particle2& p);
 
 public:
-    ParticleEmitter2(unsigned int particleAmount);
+    ParticleEmitter2(unsigned int particleAmount, const sf::Texture &texture);
 
 	bool isActive() const;
 	void start();
