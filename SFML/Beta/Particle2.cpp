@@ -17,10 +17,14 @@ void Particle2::spawn(float angle, float speed, float rotationSpeed, float size,
     this->speed = speed;
     this->rotationSpeed = rotationSpeed;
     this->size = size;
-	lifetime = Utility::random(1, 80);
+    lifetime = Utility::random(1, 200);
     rotation = 0;
 	timeLeft = lifetime;
-	originDelta = sf::Vector2f(Utility::random(-20, 20), Utility::random(-20, 20));
+    originDelta = sf::Vector2f(Utility::random(-60, 60), Utility::random(-60, 60));
+
+    float value = Utility::random(60, 200);
+
+    color = sf::Vector3i(255, value, 0);
 
     if (inverse) this->angle = Utility::pi() - angle;
 	this->inverse = inverse;
@@ -70,3 +74,6 @@ sf::Vector2f Particle2::getOriginDelta() const {
 	return originDelta;
 }
 
+sf::Vector3i Particle2::getColor() const {
+    return color;
+}

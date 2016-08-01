@@ -22,6 +22,7 @@ private:
 	unsigned int timeLeft;
 	sf::Vector2f originDelta;
 	sf::Vector2f origin;
+    sf::Vector3i color;
 	bool inverse;
 
 public:
@@ -37,6 +38,7 @@ public:
 	bool isInverse() const;
 	sf::Vector2f getOrigin() const;
 	sf::Vector2f getOriginDelta() const;
+    sf::Vector3i getColor() const;
 };
 
 #endif /* PARTICLE_H_ */

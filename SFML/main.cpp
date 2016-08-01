@@ -65,8 +65,12 @@ int main() {
 
     //std::vector<std::reference_wrapper<Updatable>> updatables{movement, c, emitter};
 
-    ParticleEmitter2 emitter(100);
+    ParticleEmitter2 emitter(2000);
+    ParticleEmitter2 emitter2(3000);
+    ParticleEmitter2 emitter3(2000);
     emitter.start();
+    emitter2.start();
+    emitter3.start();
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -76,24 +80,35 @@ int main() {
 			}
 		}
 
-        //game.update();
-        emitter.setOrigin(sf::Vector2f(500, 300));
-        emitter.update();
+        emitter.setActive(sf::Keyboard::isKeyPressed(sf::Keyboard::Space));
+        emitter2.setActive(sf::Keyboard::isKeyPressed(sf::Keyboard::O));
+        emitter3.setActive(sf::Keyboard::isKeyPressed(sf::Keyboard::P));
 
-        firstTex.clear(sf::Color::Transparent);
+        //game.update();
+        emitter.setOrigin(sf::Vector2f(300, 600));
+        emitter.update();
+        emitter2.setOrigin(sf::Vector2f(500, 600));
+        emitter2.update();
+        emitter3.setOrigin(sf::Vector2f(700, 600));
+        emitter3.update();
+
+        /*firstTex.clear(sf::Color::Transparent);
         firstTex.draw(emitter);
         firstTex.display();
 
         shader.setParameter("direction", sf::Vector2f(1, 0));
 
         secondTex.clear(sf::Color::Transparent);
-        secondTex.draw(sf::Sprite(firstTex.getTexture()), sf::RenderStates(&shader));
+        secondTex.draw(sf::Sprite(firstTex.getTexture()));
         secondTex.display();
 
         shader.setParameter("direction", sf::Vector2f(0, 1));
-
+        */
         window.clear();
-        window.draw(sf::Sprite(secondTex.getTexture()), sf::RenderStates(&shader));
+        //window.draw(sf::Sprite(secondTex.getTexture()));
+        window.draw(emitter);
+        window.draw(emitter2);
+        window.draw(emitter3);
         window.display();
 
         /*

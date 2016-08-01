@@ -34,7 +34,8 @@ public:
 	void setOrigin(sf::Vector2f origin);
 	void setInvert(bool invert);
     virtual void update() override;
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void setActive(bool active);
 };
 
 #endif /* PARTICLEEMITTER_H_ */

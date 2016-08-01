@@ -36,37 +36,33 @@ void ParticleEmitter2::updateTriangle(unsigned int i) {
     p.update();
 
     i *= 3;
-    unsigned int a = i;
-    unsigned int b = i + 1;
-    unsigned int c = i + 2;
 
-    float aa = Utility::pi(1, 2) + p.getRotation();
-    float ab = Utility::pi(11, 6) + p.getRotation();
-    float ac = Utility::pi(7, 6) + p.getRotation();
-
-    vertices[a].color = sf::Color(255, 255, 255, 255 * p.getRemainingTime());
-    vertices[b].color = sf::Color(255, 255, 255, 255 * p.getRemainingTime());
-    vertices[c].color = sf::Color(255, 255, 255, 255 * p.getRemainingTime());
     if (p.getRemainingTime() > 0) {
-        double distance = p.getSpeed() * ((1 - p.getRemainingTime()) * 20);
-        double angle = p.getAngle();
+        double angles[] = {
+            Utility::pi(1, 2),
+            Utility::pi(11, 6),
+            Utility::pi(7, 6)
+        };
 
-        float ax = std::cos(angle) * distance + std::cos(aa) * p.getSize();
-        float bx = std::cos(angle) * distance + std::cos(ab) * p.getSize();
-        float cx = std::cos(angle) * distance + std::cos(ac) * p.getSize();
+        for (int k = 0; k < 3; k++) {
+            unsigned int a = i + k;
+            vertices[a].color = sf::Color(255, 235 * p.getRemainingTime() + 20, 255 * (p.getRemainingTime() / 2.0), 255 * p.getRemainingTime());
 
-        float ay = std::sin(angle) * distance + std::sin(aa) * p.getSize();
-        float by = std::sin(angle) * distance + std::sin(ab) * p.getSize();
-        float cy = std::sin(angle) * distance + std::sin(ac) * p.getSize();
+            double distance = p.getSpeed() * ((1 - p.getRemainingTime()) * 20);
+            float angle = angles[k] + p.getRotation();
 
-        vertices[a].position = sf::Vector2f(ax, ay) + p.getOrigin() + p.getOriginDelta();
-        vertices[b].position = sf::Vector2f(bx, by) + p.getOrigin() + p.getOriginDelta();
-        vertices[c].position = sf::Vector2f(cx, cy) + p.getOrigin() + p.getOriginDelta();
+            float x = std::cos(p.getAngle()) * distance + std::cos(angle) * p.getSize();
+            float y = std::sin(p.getAngle()) * distance + std::sin(angle) * p.getSize();
+
+            vertices[a].position = sf::Vector2f(x, y) + p.getOrigin() + p.getOriginDelta();
+        }
     } else if (active) {
         spawnParticle(p);
-        //vertices[a].position = sf::Vector2f(origin.x, origin.y - p.getSize());
-        //vertices[b].position = sf::Vector2f(origin.x + p.getSize(), origin.y + p.getSize());
-        //vertices[c].position = sf::Vector2f(origin.x - p.getSize(), origin.y + p.getSize());
+    } else {
+        for (int k = 0; k < 3; k++) {
+            unsigned int a = i + k;
+            vertices[a].color = sf::Color::Transparent;
+        }
     }
 }
 
@@ -84,7 +80,7 @@ void ParticleEmitter2::start() {
 }
 
 void ParticleEmitter2::spawnParticle(Particle2& p) {
-    p.spawn(Utility::random(Utility::pi(11, 12), Utility::pi(13, 12)), Utility::random(5, 15), Utility::random(0.05, 0.2), Utility::random(7, 12), invert, origin);
+    p.spawn(Utility::random(Utility::pi(7, 4), Utility::pi(5, 4)), Utility::random(12, 25), Utility::random(0.05, 0.2), Utility::random(18, 30), invert, origin);
 }
 
 void ParticleEmitter2::end() {
@@ -93,4 +89,8 @@ void ParticleEmitter2::end() {
 
 bool ParticleEmitter2::isActive() const {
 	return active;
+}
+
+void ParticleEmitter2::setActive(bool active) {
+    this->active = active;
 }
