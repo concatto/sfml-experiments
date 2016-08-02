@@ -85,21 +85,19 @@ int main() {
         emitter.setOrigin(sf::Vector2f(500, 600));
         emitter.update();
 
-        /*firstTex.clear(sf::Color::Transparent);
+        firstTex.clear(sf::Color::Transparent);
         firstTex.draw(emitter);
         firstTex.display();
 
         shader.setParameter("direction", sf::Vector2f(1, 0));
 
         secondTex.clear(sf::Color::Transparent);
-        secondTex.draw(sf::Sprite(firstTex.getTexture()));
+        secondTex.draw(sf::Sprite(firstTex.getTexture()), sf::RenderStates(&shader));
         secondTex.display();
 
         shader.setParameter("direction", sf::Vector2f(0, 1));
-        */
         window.clear();
-        //window.draw(sf::Sprite(secondTex.getTexture()));
-        window.draw(emitter);
+        window.draw(sf::Sprite(secondTex.getTexture()), sf::RenderStates(&shader));
         window.display();
 
         /*

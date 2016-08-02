@@ -21,7 +21,7 @@ void Particle2::spawn(float angle, float speed, float rotationSpeed, float size,
     rotation = 0;
 	timeLeft = lifetime;
     originDelta = sf::Vector2f(Utility::random(-60, 60), Utility::random(-60, 60));
-    brightness = Utility::random(160, 255);
+    brightness = Utility::random(190, 255);
 
     if (inverse) this->angle = Utility::pi() - angle;
 	this->inverse = inverse;
